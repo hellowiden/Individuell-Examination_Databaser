@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "e9fdcd4c-c2b0-4060-89e0-5d67d600bb4f",
+		"name": "Movie Review API",
+		"description": "This Postman collection contains all the endpoints for the Movie Review API, which allows users to register, login, add reviews for movies, and retrieve movie and review data. The API also incorporates role-based access control, enabling different functionalities for users and admins.\n\n#### Collection Features:\n\n1. **User Endpoints**:\n    - **Register User**: Endpoint to register a new user.\n    - **Login User**: Endpoint to login a user and receive an authentication token.\n2. **Movie Endpoints**:\n    - **Add Movie**: Admin-only endpoint to add a new movie.\n    - **Get All Movies**: Retrieve a list of all movies.\n    - **Get Movie Details**: Retrieve details of a specific movie.\n    - **Update Movie**: Admin-only endpoint to update movie details.\n    - **Delete Movie**: Admin-only endpoint to delete a movie.\n    - **Get Movie Reviews**: Retrieve all reviews for a specific movie.\n    - **Get Movies with Ratings**: Retrieve a list of all movies along with their average ratings.\n3. **Review Endpoints**:\n    - **Add Review**: Endpoint to add a new review for a movie.\n    - **Get All Reviews**: Retrieve a list of all reviews.\n    - **Get Review Details**: Retrieve details of a specific review.\n    - **Update Review**: Endpoint to update a specific review.\n    - **Delete Review**: Endpoint to delete a specific review.\n\n#### Authentication:\n\n- **JWT Token**: The API uses JSON Web Tokens (JWT) for authentication. Users must log in to receive a token, which must be included in the Authorization header for protected endpoints.\n    \n\n#### Authorization:\n\n- **Roles**: The API supports user and admin roles. Only admins can add, update, or delete movies.\n    \n\n#### Models:\n\n- **User**: Contains fields for username, email, password, and role.\n- **Movie**: Contains fields for title, director, release year, and genre.\n- **Review**: Contains fields for movieId, userId, rating, comment, and createdAt.\n    \n\n#### How to Use:\n\n1. **Register a User**: Start by registering a new user using the \"Register User\" endpoint.\n2. **Login**: Use the \"Login User\" endpoint to receive a JWT token.\n3. **Set Authorization**: For protected endpoints, set the Authorization header in Postman to \"Bearer \".\n4. **Admin Operations**: Only users with an admin role can add, update, or delete movies.\n    \n\nThis collection is structured to support the development and testing of all API functionalities in a clear and organized manner, ensuring that all endpoints are accessible and can be tested efficiently.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33893168"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"adminuser3\",\n    \"email\": \"admin3@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"admin\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin3@example.com\",\n    \"password\": \"password123\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movie",
+			"item": [
+				{
+					"name": "Add Movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU5Njk3MmEzM2Y3ZDRiNmMwOWJjZmEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNzE3MDA1NywiZXhwIjoxNzE3MTczNjU3fQ.g4imdDodvGqRWNk_WF9G1n7DDr3RwtACksAQL4bo-B4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Inception2\",\n    \"director\": \"Christopher Nolan\",\n    \"releaseYear\": 2013,\n    \"genre\": \"Sci-Fi\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/6658706b63707316d93e3934",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"6658706b63707316d93e3934"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU5Njk3MmEzM2Y3ZDRiNmMwOWJjZmEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNzE3MDA1NywiZXhwIjoxNzE3MTczNjU3fQ.g4imdDodvGqRWNk_WF9G1n7DDr3RwtACksAQL4bo-B4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Inception4\",\n    \"director\": \"Christopher Nolan\",\n    \"releaseYear\": 2016,\n    \"genre\": \"Sci-Fi\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/6658706b63707316d93e3934",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"6658706b63707316d93e3934"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movie",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU5Njk3MmEzM2Y3ZDRiNmMwOWJjZmEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNzE3MDA1NywiZXhwIjoxNzE3MTczNjU3fQ.g4imdDodvGqRWNk_WF9G1n7DDr3RwtACksAQL4bo-B4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/6658702f63707316d93e3930",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"6658702f63707316d93e3930"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie Reviews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/6658706b63707316d93e3934/reviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"6658706b63707316d93e3934",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movies with Ratings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/ratings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Add Review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU5Njk3MmEzM2Y3ZDRiNmMwOWJjZmEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNzE3MDA1NywiZXhwIjoxNzE3MTczNjU3fQ.g4imdDodvGqRWNk_WF9G1n7DDr3RwtACksAQL4bo-B4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"movieId\": \"665899a0c79d2e6fefd2492a\",\n    \"rating\": 1,\n    \"comment\": \"NOT COOOOOOOL movie!\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/reviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/reviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Review Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/reviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Review",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 4,\n    \"comment\": \"Great movie!\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/reviews/665897479fa55dfa7bd08dea",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reviews",
+								"665897479fa55dfa7bd08dea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU5Njk3MmEzM2Y3ZDRiNmMwOWJjZmEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTcxNzMwODcsImV4cCI6MTcxNzE3NjY4N30.R3uPUjQfq9LmQLKfFU5FyXucWbIsBqWgEnPtuPfBJNQ"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/reviews/665897479fa55dfa7bd08dea",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reviews",
+								"665897479fa55dfa7bd08dea"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

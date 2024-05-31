@@ -4,7 +4,14 @@ const Review = require('../models/Review');
 
 exports.addReview = async (req, res) => {
     try {
-        const review = new Review(req.body);
+
+        const review = new Review({
+        movieId: req.body.movieId,
+        rating: req.body.rating,
+        comment: req.body.comment,
+        userId: req.user._id,
+        })
+        
         await review.save();
         res.status(201).json(review);
     } catch (error) {
@@ -35,7 +42,10 @@ exports.getReviewById = async (req, res) => {
 
 exports.updateReview = async (req, res) => {
     try {
-        const review = await Review.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const review = await Review.findByIdAndUpdate(req.params.id, {
+            rating: req.body.rating,
+            comment: req.body.comment,
+        }, { new: true });
         if (!review) {
             return res.status(404).json({ error: 'Review not found' });
         }
