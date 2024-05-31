@@ -4,14 +4,20 @@ const Review = require('../models/Review');
 
 exports.addReview = async (req, res) => {
     try {
+        const { movieId, rating, comment } = req.body;
+        const userId = req.user._id;
+
+        if (!movieId || !rating || rating < 0 || rating > 10 || !userId) {
+            return res.status(400).json({ error: 'Invalid input data' });
+        }
 
         const review = new Review({
-        movieId: req.body.movieId,
-        rating: req.body.rating,
-        comment: req.body.comment,
-        userId: req.user._id,
-        })
-        
+            movieId,
+            rating,
+            comment,
+            userId,
+        });
+
         await review.save();
         res.status(201).json(review);
     } catch (error) {
@@ -42,10 +48,17 @@ exports.getReviewById = async (req, res) => {
 
 exports.updateReview = async (req, res) => {
     try {
+        const { rating, comment } = req.body;
+
+        if (rating === undefined || rating < 0 || rating > 10) {
+            return res.status(400).json({ error: 'Invalid input data' });
+        }
+
         const review = await Review.findByIdAndUpdate(req.params.id, {
-            rating: req.body.rating,
-            comment: req.body.comment,
+            rating,
+            comment,
         }, { new: true });
+
         if (!review) {
             return res.status(404).json({ error: 'Review not found' });
         }
